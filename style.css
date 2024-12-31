@@ -1,0 +1,102 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/main-bg.avif');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+}
+
+.main h1 {
+    text-align: center;
+    background: linear-gradient(130deg, #9333ea, #ff0000);
+    /* Gradient */
+    background-clip: text;
+    /* Standard property */
+    -webkit-background-clip: text;
+    /* Clips the gradient to the text */
+    -webkit-text-fill-color: transparent;
+    /* Makes the background gradient visible */
+    padding-top: 2rem;
+}
+
+
+.main-container .projects {
+    display: flex;
+    flex-wrap: wrap;
+    /* Ensures items wrap to the next line when necessary */
+    justify-content: center;
+    /* Centers items horizontally */
+    gap: 2rem;
+    /* Adds spacing between rows and columns */
+    margin: 3rem;
+}
+
+.project-info {
+    flex: 0 1 45%;
+    /* Each item takes 45% of the container's width */
+    box-sizing: border-box;
+    /* Ensures padding does not affect the total width */
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s;
+    text-align: center;
+}
+
+.project-info p {
+    text-align: justify;
+    padding: 0 2rem;
+
+}
+
+.project-info:hover {
+    transform: scale(1.05);
+    /* Slightly enlarges on hover for interactivity */
+}
+
+.project-info h2 {
+    text-align: center;
+    color: #ffa200;
+}
+
+.project-info img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 1200px) {
+    .project-info {
+        flex: 0 1 45%;
+        /* Two items per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .project-info {
+        flex: 0 1 90%;
+    }
+
+    .project-info p {
+        text-align: start;
+        padding: 0 0;
+    }
+
+    .project-info img {
+        width: 80%;
+        height: auto;
+    }
+
+    .main-container .projects{
+        margin: 1rem;
+    }
+}

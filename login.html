@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up and Sign in form</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('images/login-background.avif');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .main {
+            background: #fff;
+            width: 40vw;
+            max-width: 400px;
+            padding: 0 3vw;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            display: none;
+        }
+
+        .container.active {
+            display: block;
+        }
+
+        .user-input {
+            display: flex;
+            flex-direction: column;
+        }
+
+        p {
+            color: gray;
+            margin: 1rem 0;
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        p span {
+            color: rgb(96, 96, 249);
+        }
+
+        p:hover span {
+            color: rgb(0, 0, 255);
+            cursor: pointer;
+        }
+
+        h2 {
+            text-align: center;
+            color: rgb(47, 47, 247);
+            font-size: 2.5vw;
+        }
+
+        .info-1 {
+            background: #eaeaea;
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            outline: 0;
+            border: 0;
+            background: transparent;
+            padding: 1vw;
+            font-size: 1rem;
+        }
+
+        .info-1 i {
+            padding-left: 10px;
+        }
+
+        .info-1 .toggle-password {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 2vw;
+        }
+
+        .buttons button {
+            padding: 1vw 2vw;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .buttons .active {
+            background: rgb(47, 47, 247);
+            color: white;
+        }
+
+        .buttons button:not(.active) {
+            background: #e0e0e0;
+            color: #000;
+        }
+
+        /* Responsive for smaller devices */
+        @media (max-width: 680px) {
+            .main {
+                width: 70vw;
+                padding: 3vw;
+            }
+
+            h2 {
+                font-size: 4vw;
+            }
+
+            .buttons button {
+                padding: 1.2vw 2.5vw;
+                font-size: .7rem;
+            }
+
+            input {
+                padding: 2.5vw;
+                font-size: .7rem;
+            }
+            p{
+                font-size: .6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+
+        <div id="container-1" class="container active">
+            <h2>Sign Up</h2>
+            <form>
+                <div class="user-input">
+                    <div class="info-1">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" placeholder="Name" aria-label="Name">
+                    </div>
+                    <div class="info-1">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="info-1">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Password" required minlength="6" id="signup-password">
+                        <i class="fa-solid fa-eye toggle-password"
+                            onclick="togglePassword('signup-password', this)"></i>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="container-2" class="container">
+            <h2>Sign In</h2>
+            <form>
+                <div class="user-input">
+                    <div class="info-1">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="info-1">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Password" required minlength="6" id="signin-password">
+                        <i class="fa-solid fa-eye toggle-password"
+                            onclick="togglePassword('signin-password', this)"></i>
+                    </div>
+                </div>
+            </form>
+            <p>Lost password? <span>Click Here!</span></p>
+        </div>
+
+        <div class="buttons">
+            <button class="sign-up-btn active" onclick="showSignUp()">Sign Up</button>
+            <button class="sign-in-btn" onclick="showSignIn()">Sign In</button>
+        </div>
+    </div>
+
+    <script>
+        function showSignUp() {
+            document.getElementById("container-1").classList.add("active");
+            document.getElementById("container-2").classList.remove("active");
+            document.querySelector(".sign-up-btn").classList.add("active");
+            document.querySelector(".sign-in-btn").classList.remove("active");
+
+            // Completely hide the lost password text for Sign Up
+            document.getElementById("signup-lost-password").style.display = "none";
+
+            // Hide the lost password text for Sign In as well (if it was visible)
+            document.getElementById("signin-lost-password").style.display = "none";
+        }
+
+
+        function showSignIn() {
+            document.getElementById("container-2").classList.add("active");
+            document.getElementById("container-1").classList.remove("active");
+            document.querySelector(".sign-in-btn").classList.add("active");
+            document.querySelector(".sign-up-btn").classList.remove("active");
+        }
+
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
+</body>
+
+</html>

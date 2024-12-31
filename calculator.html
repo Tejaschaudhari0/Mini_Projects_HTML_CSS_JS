@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Me!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: rgb(3, 3, 68);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .main-calculator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .calculator {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            padding: 20px;
+        }
+
+        .display {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .display input {
+            width: 100%;
+            padding: 20px;
+            font-size: 36px;
+            border: none;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: right;
+            outline: none;
+        }
+
+        .button {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 7px;
+            margin-bottom: 10px;
+        }
+
+        .button input {
+            padding: 20px;
+            font-size: 22px;
+            border: none;
+            border-radius: 12px;
+            background-color: #a049f1;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .button input:hover {
+            background-color: #9333ea;
+            transform: translateY(-2px);
+        }
+
+        .button input:active {
+            background-color: #9333ea;
+            transform: translateY(2px);
+        }
+
+        .button input:focus {
+            outline: none;
+        }
+
+        .equal {
+            background-color: #ff8c00;
+            color: white;
+            font-weight: bold;
+        }
+
+        .equal:hover {
+            background-color: #e07b00;
+        }
+
+        .button input[value="AC"],
+        .button input[value="DE"] {
+            background: #ff2525;
+        }
+
+        .button input[value="AC"]:hover,
+        .button input[value="DE"]:hover {
+            background: #ff2525;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin: 3rem 1rem 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to the simple online calculator!</h1>
+    <div class="main-calculator">
+        <div class="calculator">
+            <form>
+                <div class="display">
+                    <input type="text" id="display" name="display" value="0" readonly>
+                </div>
+                <div class="button">
+                    <input type="button" value="AC" onclick="clearDisplay()">
+                    <input type="button" value="DE" onclick="deleteLastChar()">
+                    <input type="button" value="%" onclick="appendPercentage()">
+                    <input type="button" value="/" onclick="appendToDisplay('/')" class="color">
+                </div>
+                <div class="button">
+                    <input type="button" value="7" onclick="appendToDisplay('7')">
+                    <input type="button" value="8" onclick="appendToDisplay('8')">
+                    <input type="button" value="9" onclick="appendToDisplay('9')">
+                    <input type="button" value="x" onclick="appendToDisplay('*')" class="color">
+                </div>
+                <div class="button">
+                    <input type="button" value="4" onclick="appendToDisplay('4')">
+                    <input type="button" value="5" onclick="appendToDisplay('5')">
+                    <input type="button" value="6" onclick="appendToDisplay('6')">
+                    <input type="button" value="+" onclick="appendToDisplay('+')" class="color">
+                </div>
+                <div class="button">
+                    <input type="button" value="1" onclick="appendToDisplay('1')">
+                    <input type="button" value="2" onclick="appendToDisplay('2')">
+                    <input type="button" value="3" onclick="appendToDisplay('3')">
+                    <input type="button" value="-" onclick="appendToDisplay('-')" class="color">
+                </div>
+                <div class="button">
+                    <input type="button" value="00" onclick="appendToDisplay('00')">
+                    <input type="button" value="0" onclick="appendToDisplay('0')">
+                    <input type="button" value="." onclick="appendToDisplay('.')">
+                    <input type="button" value="=" class="equal" onclick="calculateResult()">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const display = document.getElementById('display'); // Reference the display input
+
+        // Clear the display
+        function clearDisplay() {
+            display.value = '0'; // Reset the display to 0
+        }
+
+        // Delete the last character
+        function deleteLastChar() {
+            if (display.value === 'Error' || display.value === '0') {
+                display.value = '0'; // Prevent deletion if display is empty or error
+            } else {
+                display.value = display.value.slice(0, -1);
+            }
+        }
+
+        // Append a value to the display
+        function appendToDisplay(value) {
+            if (display.value === '0' || display.value === 'Error') {
+                display.value = ''; // Clear the display if it shows 0 or Error
+            }
+
+            // Prevent multiple consecutive operators
+            const lastChar = display.value.charAt(display.value.length - 1);
+            const operators = ['+', '-', '*', '/', '%'];
+
+            if (operators.includes(value) && operators.includes(lastChar)) {
+                return; // Do nothing if the last character is already an operator
+            }
+
+            display.value += value; // Append the regular value (number or operator)
+        }
+
+        // Handle percentage button
+        function appendPercentage() {
+            let currentValue = parseFloat(display.value);
+            if (!isNaN(currentValue)) {
+                // Convert percentage value, like 50 -> 50%
+                display.value = (currentValue / 100).toString();
+            } else {
+                display.value = 'Error'; // If the value is invalid, display 'Error'
+            }
+        }
+
+        // Calculate the result
+        function calculateResult() {
+            try {
+                // Handle the percentage logic in evaluation
+                let expression = display.value;
+                expression = expression.replace(/%/g, '/100'); // Replace '%' with '/100'
+                display.value = eval(expression); // Evaluate the expression
+            } catch (error) {
+                display.value = 'Error'; // Display error if the expression is invalid
+            }
+        }
+    </script>
+
+</body>
+
+</html>
