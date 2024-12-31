@@ -5,7 +5,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('Images/main-bg.avif');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://TejasChaudhari0.github.io/Mini_Projects_HTML_CSS_JS/Images/main-bg.avif");
     background-size: cover;
     background-position: center;
     color: #fff;
